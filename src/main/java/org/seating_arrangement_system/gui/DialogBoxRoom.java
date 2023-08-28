@@ -6,63 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-//public class DialogBoxRoom extends CenteredLayout{
-//
-//    private JPanel panel;
-//   public DialogBoxRoom() {
-//
-//        topLabel.setText("Divided Window with Centered Buttons");
-//       topLabel.setFont(new Font("SF Pro", Font.PLAIN, 25));
-//       topLabel.setForeground(Color.black);
-//
-//
-//       setSize(400, 500);
-//       setDefaultCloseOperation(EXIT_ON_CLOSE);
-//
-//
-//
-//       panel.setLayout(new GridBagLayout());
-//        JButton room1 = new JButton("Room1");
-//       room1.setPreferredSize(new Dimension(150, 50));
-//
-//       JButton room2 = new JButton("Room2");
-//       room2.setPreferredSize(new Dimension(150, 50));
-//       JButton room3 = new JButton("Room3");
-//       room3.setPreferredSize(new Dimension(150, 50));
-//       JButton room4 = new JButton("Room4");
-//       room4.setPreferredSize(new Dimension(150, 50));
-//
-//       compList.add(room1);
-//
-//
-//       GridBagConstraints constraints = new GridBagConstraints();
-//       constraints.gridx = 0;
-//       constraints.gridy = 0;
-//       constraints.weightx = 1.0;
-//       constraints.weighty = 1.0;
-//       constraints.anchor = GridBagConstraints.CENTER;
-//
-//       render();
-//        setVisible(true);
-//
-//
-//       room1.addActionListener(new ActionListener() {
-//           @Override
-//           public void actionPerformed(ActionEvent e) {
-//               // Show a dialog box when the button is clicked
-////               JOptionPane.showMessageDialog(
-////                       panel,
-////                       "You clicked " + "label",
-////                       "Button Clicked",
-////                       JOptionPane.INFORMATION_MESSAGE
-////               );
-//           }
-//       });
-//    }
-//
-//
-//}
-
 
 public class DialogBoxRoom extends CenteredLayout {
 
