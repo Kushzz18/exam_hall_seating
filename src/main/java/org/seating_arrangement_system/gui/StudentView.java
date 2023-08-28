@@ -16,30 +16,36 @@ public class StudentView extends CenteredLayout {
         JButton viewAll = new JButton("View All seatplan");
         JButton viewSingle = new JButton("View single seatplan");
 
-        viewAll.addActionListener(action -> {
-            SeatDao seatDao = new SeatDao();
-            List<SeatDao.HallComboItem> hallComboItems = seatDao.getAvailableHallIds();
-            hallComboBox = new JComboBox<>();
-            for (SeatDao.HallComboItem comboItem : hallComboItems) {
-                hallComboBox.addItem(comboItem);
-            }
-            int option = JOptionPane.showConfirmDialog(
-                    this,
-                    hallComboBox,
-                    "Select Hall",
-                    JOptionPane.OK_CANCEL_OPTION
-            );
+//        viewAll.addActionListener(action -> {
+//            SeatDao seatDao = new SeatDao();
+//            List<SeatDao.HallComboItem> hallComboItems = seatDao.getAvailableHallIds();
+//            hallComboBox = new JComboBox<>();
+//            for (SeatDao.HallComboItem comboItem : hallComboItems) {
+//                hallComboBox.addItem(comboItem);
+//            }
+//            int option = JOptionPane.showConfirmDialog(
+//                    this,
+//                    hallComboBox,
+//                    "Select Hall",
+//                    JOptionPane.OK_CANCEL_OPTION
+//            );
+//
+//            if (option == JOptionPane.OK_OPTION) {
+//
+//                SeatDao.HallComboItem selectedHall = (SeatDao.HallComboItem) hallComboBox.getSelectedItem();
+//                System.out.println("Inside Hall : " + selectedHall.getName());
+//                List<Seat> seatList = seatDao.getAllForHall(selectedHall.getName());
+//
+//                String[] headers = {"Student Id", "Student Name", "Hall Info", "Room No", "Seat Id", "Semester"};
+//                DataTable dataTable = new DataTable(seatList, headers);
+//                dataTable.render();
+//            }
+//        });
 
-            if (option == JOptionPane.OK_OPTION) {
+        viewAll.addActionListener(action ->{
 
-                SeatDao.HallComboItem selectedHall = (SeatDao.HallComboItem) hallComboBox.getSelectedItem();
-                System.out.println("Inside Hall : " + selectedHall.getName());
-                List<Seat> seatList = seatDao.getAllForHall(selectedHall.getName());
-
-                String[] headers = {"Student Id", "Student Name", "Hall Info", "Room No", "Seat Id", "Semester"};
-                DataTable dataTable = new DataTable(seatList, headers);
-                dataTable.render();
-            }
+            this.dispose();
+            new DialogBoxRoom();
         });
 
         viewSingle.addActionListener(action -> {
