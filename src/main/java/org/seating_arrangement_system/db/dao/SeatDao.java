@@ -156,4 +156,30 @@ public class SeatDao extends Dao {
             throw new RuntimeException(e);
         }
     }
+
+    public List<Seat> getSeatsForHallAndRoom(String hallInfo, int roomNumber) {
+        List<Seat> seatList = new ArrayList<>();
+        String query = "SELECT * FROM seatplan WHERE hall_info = ? AND room_no = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, hallInfo);
+            statement.setInt(2, roomNumber);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Seat seat = new Seat(
+                        resultSet.getInt("student_id"),
+                        resultSet.getString("student_name"),
+                        resultSet.getString("hall_info"),
+                        resultSet.getInt("room_no"),
+                        resultSet.getString("seat_id"),
+                        resultSet.getString("sem")
+                );
+                seatList.add(seat);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return seatList;
+    }
+
 }

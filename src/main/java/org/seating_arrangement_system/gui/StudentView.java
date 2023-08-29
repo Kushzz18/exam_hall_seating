@@ -9,6 +9,8 @@ import java.util.List;
 
 public class StudentView extends CenteredLayout {
     private JComboBox<SeatDao.HallComboItem> hallComboBox;
+    private SeatDao.HallComboItem selectedHall;
+    private String selectedRoom;
 
     public StudentView() {
         this.setTitle("Student View");
@@ -32,9 +34,9 @@ public class StudentView extends CenteredLayout {
 
             if (option == JOptionPane.OK_OPTION) {
 
+                SeatDao.HallComboItem selectedHall = (SeatDao.HallComboItem) hallComboBox.getSelectedItem();
                 this.dispose();
-            new DialogBoxRoom();
-
+                new DialogBoxRoom(selectedHall);
 //                SeatDao.HallComboItem selectedHall = (SeatDao.HallComboItem) hallComboBox.getSelectedItem();
 //                System.out.println("Inside Hall : " + selectedHall.getName());
 //                List<Seat> seatList = seatDao.getAllForHall(selectedHall.getName());
@@ -44,6 +46,8 @@ public class StudentView extends CenteredLayout {
 //                dataTable.render();
             }
         });
+
+
 
 //        viewAll.addActionListener(action ->{
 //
