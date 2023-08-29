@@ -1,5 +1,5 @@
-
 package org.seating_arrangement_system.gui;
+
 
 import org.seating_arrangement_system.db.dao.SeatDao;
 
@@ -13,11 +13,11 @@ import org.seating_arrangement_system.db.models.Room;
 import org.seating_arrangement_system.db.dao.HallDao;
 import org.seating_arrangement_system.db.models.Hall;
 
-public class DialogBoxRoom extends CenteredLayout {
+public class AdminRoomLayout extends CenteredLayout {
 
     private SeatDao.HallComboItem selectedHall;
 
-    public DialogBoxRoom(SeatDao.HallComboItem selectedHall) {
+    public AdminRoomLayout(SeatDao.HallComboItem selectedHall) {
         this.selectedHall = selectedHall;
         setTitle("Room Layout");
         setSize(600, 600);
@@ -45,10 +45,13 @@ public class DialogBoxRoom extends CenteredLayout {
             buttonPanel.add(roomButton);
         }
 
+
         JButton backButton = new JButton("Back");
         backButton.setPreferredSize(new Dimension(150, 50));
-        backButton.addActionListener(new DialogBoxRoom.BackButtonListener());
+        backButton.addActionListener(new BackButtonListener());
         add(backButton, BorderLayout.SOUTH);
+
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
@@ -79,18 +82,17 @@ public class DialogBoxRoom extends CenteredLayout {
             System.out.println("Selected Room Number: " + roomNumber);
 
             String[] headers = {"Student Id", "Student Name", "Hall Info", "Room No", "Seat Id", "Semester"};
-            DataTable dataTable = new DataTable(seatList, headers,roomNumber);
+            AdminDataTable dataTable = new AdminDataTable(seatList, headers,roomNumber);
             dataTable.render();
         }
     }
     private class BackButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            dispose();
-            new StudentView();
+           dispose();
+            new AdminView();
         }
     }
-
 
     private int getHallId(String hallName) {
         HallDao hallDao = new HallDao();
@@ -106,3 +108,4 @@ public class DialogBoxRoom extends CenteredLayout {
 
 
 }
+
