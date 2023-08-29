@@ -19,7 +19,7 @@ public class DialogBoxRoom extends CenteredLayout {
 
     public DialogBoxRoom(SeatDao.HallComboItem selectedHall) {
         this.selectedHall = selectedHall;
-        setTitle("Divided Window with Centered Buttons");
+        setTitle("Room Layout");
         setSize(600, 600);
 
         JComboBox<String> roomComboBox = new JComboBox<>();
@@ -44,9 +44,6 @@ public class DialogBoxRoom extends CenteredLayout {
             JButton roomButton = createButton("Room " + room.getRoomNumber());
             buttonPanel.add(roomButton);
         }
-
-
-
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
@@ -63,15 +60,10 @@ public class DialogBoxRoom extends CenteredLayout {
 
     private class RoomButtonListener implements ActionListener {
         private int roomNumber;
-
-
         public RoomButtonListener(int roomNumber) {
 
             this.roomNumber = roomNumber;
         }
-
-
-
         @Override
         public void actionPerformed(ActionEvent e) {
 

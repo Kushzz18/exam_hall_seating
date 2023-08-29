@@ -12,7 +12,7 @@ import java.awt.print.PrinterJob;
 import java.util.List;
 import java.util.Vector;
 
-public class DataTable extends JFrame implements ActionListener {
+public class DataTable extends JFrame {
     private JTable table;
     DataTable(List<Seat> data, String[] headers) {
 
@@ -37,37 +37,37 @@ public class DataTable extends JFrame implements ActionListener {
         JScrollPane scrollPane = new JScrollPane(table);
 
         add(scrollPane);
-        addButton();
+//        addButton();
     }
-    private void addButton() {
-        JButton printButton = new JButton("Print");
-        printButton.addActionListener(this); // Register the button with the ActionListener
-        add(printButton, BorderLayout.SOUTH); // Add the button to the bottom of the frame
-    }
+//    private void addButton() {
+//        JButton printButton = new JButton("Print");
+//        printButton.addActionListener(this); // Register the button with the ActionListener
+//        add(printButton, BorderLayout.SOUTH); // Add the button to the bottom of the frame
+//    }
 
     void render() {
         setVisible(true);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // Handle the button click event here
-        if (e.getActionCommand().equals("Print")) {
-            try {
-                // Create a PrinterJob
-                PrinterJob printerJob = PrinterJob.getPrinterJob();
-
-                // Set the printable content to the JTable
-                printerJob.setPrintable(table.getPrintable(JTable.PrintMode.FIT_WIDTH, null, null));
-
-                // Show the print dialog to the user
-                if (printerJob.printDialog()) {
-                    // If the user confirms, start the printing process
-                    printerJob.print();
-                }
-            } catch (PrinterException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
+//    @Override
+//    public void actionPerformed(ActionEvent e) {
+//        // Handle the button click event here
+//        if (e.getActionCommand().equals("Print")) {
+//            try {
+//                // Create a PrinterJob
+//                PrinterJob printerJob = PrinterJob.getPrinterJob();
+//
+//                // Set the printable content to the JTable
+//                printerJob.setPrintable(table.getPrintable(JTable.PrintMode.FIT_WIDTH, null, null));
+//
+//                // Show the print dialog to the user
+//                if (printerJob.printDialog()) {
+//                    // If the user confirms, start the printing process
+//                    printerJob.print();
+//                }
+//            } catch (PrinterException ex) {
+//                ex.printStackTrace();
+//            }
+//        }
+//    }
 }
