@@ -1,5 +1,6 @@
 package org.seating_arrangement_system.gui;
 
+import org.seating_arrangement_system.db.dao.SeatDao;
 import org.seating_arrangement_system.db.models.Seat;
 import org.seating_arrangement_system.seat.plan.SeatPlanner;
 import org.seating_arrangement_system.util.SeatSizeValidator;
@@ -7,8 +8,14 @@ import org.seating_arrangement_system.util.SeatSizeValidator;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 public class AdminView extends CenteredLayout {
+
+    private JComboBox<SeatDao.HallComboItem> hallComboBox;
+    private SeatDao.HallComboItem selectedHall;
+
+
     AdminView () {
         topLabel.setText("Admin Section");
         topLabel.setFont(new Font("SF Pro", Font.PLAIN, 25));
@@ -61,6 +68,41 @@ public class AdminView extends CenteredLayout {
 
 
         compList.add(delRoom);
+
+        JButton viewAll = new JButton("View All seatplan");
+
+        viewAll.addActionListener(action -> {
+            SeatDao seatDao = new SeatDao();
+            List<SeatDao.HallComboItem> hallComboItems = seatDao.getAvailableHallIds();
+            hallComboBox = new JComboBox<>();
+            for (SeatDao.HallComboItem comboItem : hallComboItems) {
+                hallComboBox.addItem(comboItem);
+            }
+            int option = JOptionPane.showConfirmDialog(
+                    this,
+                    hallComboBox,
+                    "Select Hall",
+                    JOptionPane.OK_CANCEL_OPTION
+            );
+
+            if (option == JOptionPane.OK_OPTION) {
+
+                SeatDao.HallComboItem selectedHall = (SeatDao.HallComboItem) hallComboBox.getSelectedItem();
+                this.dispose();
+                new AdminRoomLayout(selectedHall);
+//                SeatDao.HallComboItem selectedHall = (SeatDao.HallComboItem) hallComboBox.getSelectedItem();
+//                System.out.println("Inside Hall : " + selectedHall.getName());
+//                List<Seat> seatList = seatDao.getAllForHall(selectedHall.getName());
+//
+//                String[] headers = {"Student Id", "Student Name", "Hall Info", "Room No", "Seat Id", "Semester"};
+//                DataTable dataTable = new DataTable(seatList, headers);
+//                dataTable.render();
+            }
+        });
+
+        compList.add(viewAll);
+
+
 
         JButton logout = new JButton("Logout");
 

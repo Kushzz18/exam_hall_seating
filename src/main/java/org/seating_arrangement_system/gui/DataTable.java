@@ -14,7 +14,7 @@ import java.util.Vector;
 
 public class DataTable extends JFrame {
     private JTable table;
-    DataTable(List<Seat> data, String[] headers) {
+    DataTable(List<Seat> data, String[] headers,int roomNumber) {
 
         setSize(700, 300);
 
@@ -34,11 +34,16 @@ public class DataTable extends JFrame {
 
         table = new JTable(model);
 
+
         JScrollPane scrollPane = new JScrollPane(table);
 
         add(scrollPane);
-//        addButton();
+        setTitle("Seat Plan - Room " + roomNumber);
+
+
     }
+
+
 //    private void addButton() {
 //        JButton printButton = new JButton("Print");
 //        printButton.addActionListener(this); // Register the button with the ActionListener
@@ -70,4 +75,8 @@ public class DataTable extends JFrame {
 //            }
 //        }
 //    }
+
+
+
+
 }
