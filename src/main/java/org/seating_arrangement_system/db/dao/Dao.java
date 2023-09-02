@@ -8,7 +8,7 @@ public abstract class Dao {
     //Class.forName("com.mysql.cj.jdbc.Driver");
     private final static String url = "jdbc:mysql://localhost/exam_seating_arrangement";
     private final static String dbUser = "root";
-    private final static String dbPassword = "kist@123";
+    private final static String dbPassword = "helloMeow2";
 
     Dao() {
         try {

@@ -14,6 +14,8 @@ import java.awt.print.PrinterJob;
 import java.util.List;
 import java.util.Vector;
 
+import java.awt.print.*;
+
 public class AdminDataTable extends JFrame implements ActionListener {
     private JTable tableA;
     private JTable tableB;
@@ -54,6 +56,11 @@ public class AdminDataTable extends JFrame implements ActionListener {
         JLabel labelB = new JLabel("<html><font size='10'>&emsp;&emsp;B</font></html>");
         labelB.setHorizontalAlignment(JLabel.CENTER);
 
+    JLabel collegeLabel = new JLabel("KIST College of Information Technology", JLabel.CENTER);
+    JLabel roomLabel = new JLabel("Room Number: " + roomNumber, JLabel.CENTER);
+    Font collegeFont = new Font("SansSerif", Font.BOLD, 16);
+        collegeLabel.setFont(collegeFont);
+
         // Create a top-level JPanel to control the layout
         JPanel mainPanel = new JPanel(new BorderLayout());
         //mainPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0)); // Set padding to zero
@@ -69,6 +76,8 @@ public class AdminDataTable extends JFrame implements ActionListener {
         // Create a panel for labels and add labels to it
         JPanel labelPanel = new JPanel(new GridBagLayout());
 
+
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -78,17 +87,34 @@ public class AdminDataTable extends JFrame implements ActionListener {
         Font titleFont = new Font("SansSerif", Font.BOLD, 24);
 
         JLabel titleLabel = new JLabel("Exam Seat Planning", JLabel.CENTER);
+
         titleLabel.setFont(titleFont);
         labelPanel.add(titleLabel, gbc);
+        labelPanel.add(collegeLabel, gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.gridwidth = 1;
+    titleLabel.setFont(titleFont);
+        labelPanel.add(titleLabel, gbc);
+
+        labelPanel.add(collegeLabel, gbc);
+
+    gbc.gridy = 1;
+        labelPanel.add(roomLabel, gbc);
+
+    gbc.gridy = 2;
+        labelPanel.add(titleLabel, gbc);
+
+    gbc.gridx = 0; // Reset the gridx
+    gbc.gridy = 3;
+    gbc.gridwidth = 1; // Reset the gridwidth
+    gbc.insets = new Insets(10, 50, 10, 10); // Add horizontal space around labelA
         labelPanel.add(labelA, gbc);
 
-        gbc.gridx = 1;
-        gbc.gridy = 1;
+    gbc.gridx = 1; // Move to the next column for labelB
+    gbc.insets = new Insets(10, 10, 10, 50); // Add horizontal space around labelB
         labelPanel.add(labelB, gbc);
+
+
+
 
         // Create a panel for tables and add table panels to it
         JPanel tablePanel = new JPanel(new GridLayout(1, 2, 10, 0));
@@ -109,6 +135,8 @@ public class AdminDataTable extends JFrame implements ActionListener {
 
         setTitle("Seat Plan - Room " + roomNumber);
     }
+
+
 
     private void setCellSize(JTable table, int cellWidth, int cellHeight) {
         table.setRowHeight(cellHeight);
@@ -146,19 +174,48 @@ public class AdminDataTable extends JFrame implements ActionListener {
                 // Create a PrinterJob
                 PrinterJob printerJob = PrinterJob.getPrinterJob();
 
-                // Set the printable content to both tables
-                printerJob.setPrintable(tableA.getPrintable(JTable.PrintMode.FIT_WIDTH, null, null));
-                if (printerJob.printDialog()) {
-                    printerJob.print();
-                }
+                // Set the printable content to the entire frame
+                printerJob.setPrintable(new Printable() {
+                    @Override
+                    public int print(Graphics g, PageFormat pf, int page) throws PrinterException {
+                        if (page > 0) {
+                            return NO_SUCH_PAGE;
+                        }
 
-                printerJob.setPrintable(tableB.getPrintable(JTable.PrintMode.FIT_WIDTH, null, null));
+                        // Calculate the scale factor to fit the frame within the page
+                        double scaleFactor = pf.getImageableWidth() / getWidth();
+                        double scaleYFactor = pf.getImageableHeight() / getHeight();
+                        double scale = Math.min(scaleFactor, scaleYFactor);
+
+                        // Apply the scale transformation to the graphics object
+                        Graphics2D g2d = (Graphics2D) g;
+                        g2d.translate(pf.getImageableX(), pf.getImageableY());
+                        g2d.scale(scale, scale);
+
+                        // Paint the frame onto the page, excluding the button
+                        printAll(g2d);
+
+                        return PAGE_EXISTS;
+                    }
+                });
+
                 if (printerJob.printDialog()) {
+                    // Remove the "Print" button temporarily
+                    remove(getContentPane().getComponent(1));
+                    validate();
+
                     printerJob.print();
+
+                    // Add the "Print" button back after printing
+                    addButton();
+                    validate();
                 }
             } catch (PrinterException ex) {
                 ex.printStackTrace();
             }
         }
     }
+
+
+
 }
