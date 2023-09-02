@@ -13,19 +13,16 @@ import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.util.List;
 import java.util.Vector;
-import javax.swing.table.DefaultTableCellRenderer;
 
 import java.awt.print.*;
-import javax.swing.JSeparator;
-
 
 public class AdminDataTable extends JFrame implements ActionListener {
     private JTable tableA;
     private JTable tableB;
-    private static final int cellWidth = 115;
+    private static final int cellWidth = 70;
 
     AdminDataTable(List<Seat> data, String[] headers, int roomNumber) {
-        setSize(700, 800);
+        setSize(700, 700);
 
         DefaultTableModel modelA = new DefaultTableModel();
         modelA.setColumnIdentifiers(new String[]{"Student Id", "Seat Id"});
@@ -49,10 +46,6 @@ public class AdminDataTable extends JFrame implements ActionListener {
         tableA = new JTable(modelA);
         tableB = new JTable(modelB);
 
-        DefaultTableCellRenderer centerRenderer = new CenterTableCellRenderer();
-        tableA.setDefaultRenderer(Object.class, centerRenderer); // Object.class means it will apply to all columns
-        tableB.setDefaultRenderer(Object.class, centerRenderer);
-
         // Set row height for both tables
         int cellHeight = 30; // Adjust this value to fit your data
         setCellSize(tableA, cellWidth, cellHeight);
@@ -65,10 +58,8 @@ public class AdminDataTable extends JFrame implements ActionListener {
 
     JLabel collegeLabel = new JLabel("KIST College of Information Technology", JLabel.CENTER);
     JLabel roomLabel = new JLabel("Room Number: " + roomNumber, JLabel.CENTER);
-    Font collegeFont = new Font("SansSerif", Font.BOLD, 24);
-    Font roomFont = new Font("SansSerif", Font.BOLD, 24);
+    Font collegeFont = new Font("SansSerif", Font.BOLD, 16);
         collegeLabel.setFont(collegeFont);
-        roomLabel.setFont(roomFont);
 
         // Create a top-level JPanel to control the layout
         JPanel mainPanel = new JPanel(new BorderLayout());
@@ -101,44 +92,18 @@ public class AdminDataTable extends JFrame implements ActionListener {
         labelPanel.add(collegeLabel, gbc);
 
     titleLabel.setFont(titleFont);
-       // labelPanel.add(titleLabel, gbc);
-
-
-        JSeparator separator1 = new JSeparator(SwingConstants.HORIZONTAL);
-        separator1.setPreferredSize(new Dimension(400, 2)); // Adjust the size as needed
-        separator1.setForeground(Color.BLACK); // Set the color of the line
-
-        JSeparator separator2 = new JSeparator(SwingConstants.HORIZONTAL);
-        separator2.setPreferredSize(new Dimension(400, 2)); // Adjust the size as needed
-        separator2.setForeground(Color.BLACK); // Set the color of the line
-
-        JSeparator separator3 = new JSeparator(SwingConstants.HORIZONTAL);
-        separator3.setPreferredSize(new Dimension(400, 2)); // Adjust the size as needed
-        separator3.setForeground(Color.BLACK); // Set the color of the line
-
-        gbc.gridy = 1;
-        labelPanel.add(collegeLabel, gbc);
-
-        gbc.gridy =2;
-        labelPanel.add(separator1, gbc);
-
-
-    gbc.gridy = 3;
-        labelPanel.add(roomLabel, gbc);
-
-        gbc.gridy =4;
-        labelPanel.add(separator2, gbc);
-
-
-
-    gbc.gridy = 5;
         labelPanel.add(titleLabel, gbc);
 
-        gbc.gridy =6;
-        labelPanel.add(separator3, gbc);
+        labelPanel.add(collegeLabel, gbc);
+
+    gbc.gridy = 1;
+        labelPanel.add(roomLabel, gbc);
+
+    gbc.gridy = 2;
+        labelPanel.add(titleLabel, gbc);
 
     gbc.gridx = 0; // Reset the gridx
-    gbc.gridy = 7;
+    gbc.gridy = 3;
     gbc.gridwidth = 1; // Reset the gridwidth
     gbc.insets = new Insets(10, 50, 10, 10); // Add horizontal space around labelA
         labelPanel.add(labelA, gbc);
@@ -201,17 +166,6 @@ public class AdminDataTable extends JFrame implements ActionListener {
         JButton printButton = new JButton("Print");
         printButton.addActionListener(this);
         add(printButton, BorderLayout.SOUTH);
-    }
-    public class CenterTableCellRenderer extends DefaultTableCellRenderer {
-        public CenterTableCellRenderer() {
-            setHorizontalAlignment(SwingConstants.CENTER);
-        }
-
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            return component;
-        }
     }
 
     void render() {
