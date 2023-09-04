@@ -143,14 +143,9 @@ public class AdminDataTable extends JFrame implements ActionListener {
     gbc.insets = new Insets(10, 50, 10, 10); // Add horizontal space around labelA
         labelPanel.add(labelA, gbc);
 
-<<<<<<< HEAD
-    gbc.gridx = 1; // Move to the next column for labelB
-    gbc.insets = new Insets(10, 10, 10, 50); // Add horizontal space around labelB
-=======
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.gridwidth = 1;
->>>>>>> 0a01d67 (Update)
+
+        gbc.gridx = 1; // Move to the next column for labelB
+        gbc.insets = new Insets(10, 10, 10, 50); // Add horizontal space around labelB
         labelPanel.add(labelB, gbc);
 
 
