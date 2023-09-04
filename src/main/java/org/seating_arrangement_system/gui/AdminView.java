@@ -1,4 +1,5 @@
 package org.seating_arrangement_system.gui;
+import org.seating_arrangement_system.db.dao.ExportFromExcel;
 
 import org.seating_arrangement_system.db.dao.SeatDao;
 import org.seating_arrangement_system.db.models.Seat;
@@ -127,6 +128,18 @@ public class AdminView extends CenteredLayout {
         });
 
         compList.add(generate);
+
+
+
+        JButton export = new JButton("Export from excel");
+
+        export.addActionListener(action -> {
+            this.dispose();
+            new ExportFromExcel();
+        });
+
+        compList.add(generate);
+        compList.add(export);
         compList.add(logout);
 
         render();
