@@ -143,9 +143,9 @@ public class DataTable extends JFrame  {
         setCellSize(tableA, cellWidth, cellHeight);
         setCellSize(tableB, cellWidth, cellHeight);
 
-        JLabel labelA = new JLabel("<html><font size='10'>&emsp;A</font></html>");
+        JLabel labelA = new JLabel("<html><font size='10'>&emsp;&nbspA</font></html>");
         labelA.setHorizontalAlignment(JLabel.CENTER);
-        JLabel labelB = new JLabel("<html><font size='10'>&emsp;&emsp;B</font></html>");
+        JLabel labelB = new JLabel("<html><font size='10'>&emsp;&emsp;&emsp;B</font></html>");
         labelB.setHorizontalAlignment(JLabel.CENTER);
 
         JLabel collegeLabel = new JLabel("KIST College of Information Technology", JLabel.CENTER);

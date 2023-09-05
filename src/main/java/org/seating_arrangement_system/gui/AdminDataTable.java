@@ -58,9 +58,9 @@ public class AdminDataTable extends JFrame implements ActionListener {
         setCellSize(tableA, cellWidth, cellHeight);
         setCellSize(tableB, cellWidth, cellHeight);
 
-        JLabel labelA = new JLabel("<html><font size='10'>A</font></html>");
+        JLabel labelA = new JLabel("<html><font size='10'>&emsp;&nbsp;A</font></html>");
         labelA.setHorizontalAlignment(JLabel.CENTER);
-        JLabel labelB = new JLabel("<html><font size='10'>&emsp;&emsp;&emsp;B</font></html>");
+        JLabel labelB = new JLabel("<html><font size='10'>&emsp;&emsp;&emsp;&emsp;B</font></html>");
         labelB.setHorizontalAlignment(JLabel.CENTER);
 
     JLabel collegeLabel = new JLabel("KIST College of Information Technology", JLabel.CENTER);
