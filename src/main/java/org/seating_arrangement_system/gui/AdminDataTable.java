@@ -25,24 +25,26 @@ public class AdminDataTable extends JFrame implements ActionListener {
     private static final int cellWidth = 115;
 
     AdminDataTable(List<Seat> data, String[] headers, int roomNumber) {
-        setSize(700, 800);
+        setSize(1200, 1200);
 
         DefaultTableModel modelA = new DefaultTableModel();
-        modelA.setColumnIdentifiers(new String[]{"Student Id", "Seat Id"});
+        modelA.setColumnIdentifiers(new String[]{"Student Id", "Seat Id", "Semester"});
 
         DefaultTableModel modelB = new DefaultTableModel();
-        modelB.setColumnIdentifiers(new String[]{"Student Id", "Seat Id"});
+        modelB.setColumnIdentifiers(new String[]{"Student Id", "Seat Id", "Semester"});
 
         for (Seat seat : data) {
             if (seat.getSeatId().startsWith("A")) {
                 Vector<Object> row = new Vector<>();
                 row.add(seat.getStudentId());
                 row.add(seat.getSeatId());
+                row.add(seat.getSemester());
                 modelA.addRow(row);
             } else if (seat.getSeatId().startsWith("B")) {
                 Vector<Object> row = new Vector<>();
                 row.add(seat.getStudentId());
                 row.add(seat.getSeatId());
+                row.add(seat.getSemester());
                 modelB.addRow(row);
             }
         }
@@ -58,21 +60,20 @@ public class AdminDataTable extends JFrame implements ActionListener {
         setCellSize(tableA, cellWidth, cellHeight);
         setCellSize(tableB, cellWidth, cellHeight);
 
-        JLabel labelA = new JLabel("<html><font size='10'>&emsp;&nbsp;A</font></html>");
+        JLabel labelA = new JLabel("<html><font size='8'>&emsp;A</font></html>");
         labelA.setHorizontalAlignment(JLabel.CENTER);
-        JLabel labelB = new JLabel("<html><font size='10'>&emsp;&emsp;&emsp;&emsp;B</font></html>");
+        JLabel labelB = new JLabel("<html><font size='8'>&emsp;&emsp;&emsp;&emsp;&emsp;B</font></html>");
         labelB.setHorizontalAlignment(JLabel.CENTER);
 
-    JLabel collegeLabel = new JLabel("KIST College of Information Technology", JLabel.CENTER);
-    JLabel roomLabel = new JLabel("Room Number: " + roomNumber, JLabel.CENTER);
-    Font collegeFont = new Font("SansSerif", Font.BOLD, 24);
-    Font roomFont = new Font("SansSerif", Font.BOLD, 24);
+        JLabel collegeLabel = new JLabel("KIST College of Information Technology", JLabel.CENTER);
+        JLabel roomLabel = new JLabel("Room Number: " + roomNumber, JLabel.CENTER);
+        Font collegeFont = new Font("SansSerif", Font.BOLD, 24);
+        Font roomFont = new Font("SansSerif", Font.BOLD, 24);
         collegeLabel.setFont(collegeFont);
         roomLabel.setFont(roomFont);
 
         // Create a top-level JPanel to control the layout
         JPanel mainPanel = new JPanel(new BorderLayout());
-        //mainPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0)); // Set padding to zero
 
         // Create separate JPanel for tables A and B
         JPanel panelA = new JPanel(new BorderLayout());
@@ -84,9 +85,6 @@ public class AdminDataTable extends JFrame implements ActionListener {
 
         // Create a panel for labels and add labels to it
         JPanel labelPanel = new JPanel(new GridBagLayout());
-
-
-
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -95,14 +93,9 @@ public class AdminDataTable extends JFrame implements ActionListener {
 
         Font titleFont = new Font("SansSerif", Font.BOLD, 20);
         JLabel titleLabel = new JLabel("Exam Seat Planning", JLabel.CENTER);
-
         titleLabel.setFont(titleFont);
         labelPanel.add(titleLabel, gbc);
         labelPanel.add(collegeLabel, gbc);
-
-    titleLabel.setFont(titleFont);
-       // labelPanel.add(titleLabel, gbc);
-
 
         JSeparator separator1 = new JSeparator(SwingConstants.HORIZONTAL);
         separator1.setPreferredSize(new Dimension(400, 2)); // Adjust the size as needed
@@ -119,37 +112,30 @@ public class AdminDataTable extends JFrame implements ActionListener {
         gbc.gridy = 1;
         labelPanel.add(collegeLabel, gbc);
 
-        gbc.gridy =2;
+        gbc.gridy = 2;
         labelPanel.add(separator1, gbc);
 
-
-    gbc.gridy = 3;
+        gbc.gridy = 3;
         labelPanel.add(roomLabel, gbc);
 
-        gbc.gridy =4;
+        gbc.gridy = 4;
         labelPanel.add(separator2, gbc);
 
-
-
-    gbc.gridy = 5;
+        gbc.gridy = 5;
         labelPanel.add(titleLabel, gbc);
 
-        gbc.gridy =6;
+        gbc.gridy = 6;
         labelPanel.add(separator3, gbc);
 
-    gbc.gridx = 0; // Reset the gridx
-    gbc.gridy = 7;
-    gbc.gridwidth = 1; // Reset the gridwidth
-    gbc.insets = new Insets(10, 50, 10, 10); // Add horizontal space around labelA
+        gbc.gridx = 0; // Reset the gridx
+        gbc.gridy = 7;
+        gbc.gridwidth = 1; // Reset the gridwidth
+        gbc.insets = new Insets(10, 50, 10, 10); // Add horizontal space around labelA
         labelPanel.add(labelA, gbc);
-
 
         gbc.gridx = 1; // Move to the next column for labelB
         gbc.insets = new Insets(10, 10, 10, 50); // Add horizontal space around labelB
         labelPanel.add(labelB, gbc);
-
-
-
 
         // Create a panel for tables and add table panels to it
         JPanel tablePanel = new JPanel(new GridLayout(1, 2, 10, 0));
@@ -171,8 +157,6 @@ public class AdminDataTable extends JFrame implements ActionListener {
         setTitle("Seat Plan - Room " + roomNumber);
     }
 
-
-
     private void setCellSize(JTable table, int cellWidth, int cellHeight) {
         table.setRowHeight(cellHeight);
         TableColumnModel columnModel = table.getColumnModel();
@@ -190,13 +174,12 @@ public class AdminDataTable extends JFrame implements ActionListener {
         table.setPreferredScrollableViewportSize(tableSize);
     }
 
-
-
     private void addButton() {
         JButton printButton = new JButton("Print");
         printButton.addActionListener(this);
         add(printButton, BorderLayout.SOUTH);
     }
+
     public class CenterTableCellRenderer extends DefaultTableCellRenderer {
         public CenterTableCellRenderer() {
             setHorizontalAlignment(SwingConstants.CENTER);
@@ -261,7 +244,4 @@ public class AdminDataTable extends JFrame implements ActionListener {
             }
         }
     }
-
-
-
 }

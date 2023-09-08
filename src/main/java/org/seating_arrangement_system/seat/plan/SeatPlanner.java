@@ -42,6 +42,7 @@ public class SeatPlanner {
             rooms.forEach(room -> assignStudent(hall, room, students));
         });
     }
+
     private void assignStudent(Hall hall, Room room, Queue<Student> studentQ) {
         if (studentQ.isEmpty()) return;
 
@@ -59,28 +60,34 @@ public class SeatPlanner {
         Collections.shuffle(seatIdentifiers); // Shuffle the list of seat identifiers randomly
 
         // Create a map to track assigned benches for each semester
-        Map<String, Set<String>> assignedBenchesBySemester = new HashMap<>();
+        Map<String, Map<String, Set<String>>> assignedBenchesBySemester = new HashMap<>();
 
         for (Character colName : columnNames) {
             for (String seatIdentifier : seatIdentifiers) {
                 if (studentQ.isEmpty()) return;
-                Student student = studentQ.peek();
+                Student student = studentQ.poll();
                 assert student != null;
 
                 // Check if the current semester has an assigned bench already
                 String semester = student.getSemester();
-                Set<String> assignedBenches = assignedBenchesBySemester.getOrDefault(semester, new HashSet<>());
+                Map<String, Set<String>> assignedBenches = assignedBenchesBySemester.getOrDefault(semester, new HashMap<>());
 
-                if (!assignedBenches.contains(colName + seatIdentifier)) {
+                // Check if the current bench is already occupied by two students from the same semester
+                boolean isSameSemesterOccupied = assignedBenches.values().stream()
+                        .anyMatch(seats -> seats.size() >= 2 && seats.iterator().next().startsWith(colName + seatIdentifier));
+
+                if (!isSameSemesterOccupied) {
                     // Assign the seat and update the tracking
                     assignSeat(hall, studentQ, room, colName, seatIdentifier);
-                    assignedBenches.add(colName + seatIdentifier);
+                    assignedBenches.computeIfAbsent(colName + seatIdentifier, key -> new HashSet<>()).add(semester);
                     assignedBenchesBySemester.put(semester, assignedBenches);
+                } else {
+                    // If the current bench is occupied by two students from the same semester, remove the student from the queue
+                    studentQ.poll();
                 }
             }
         }
     }
-
 
     private static void assignSeat(Hall hall, Queue<Student> studentQ, Room room, char colName, String seat) {
         Student student = studentQ.poll();
@@ -97,3 +104,4 @@ public class SeatPlanner {
         seatDao.insertSeat(seatInfo);
     }
 }
+

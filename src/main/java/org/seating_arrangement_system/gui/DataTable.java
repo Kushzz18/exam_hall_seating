@@ -110,24 +110,26 @@ public class DataTable extends JFrame  {
     private static final int cellWidth = 115;
 
     DataTable(List<Seat> data, String[] headers, int roomNumber) {
-        setSize(700, 800);
+        setSize(1200, 1200);
 
         DefaultTableModel modelA = new DefaultTableModel();
-        modelA.setColumnIdentifiers(new String[]{"Student Id", "Seat Id"});
+        modelA.setColumnIdentifiers(new String[]{"Student Id", "Seat Id", "Semester"});
 
         DefaultTableModel modelB = new DefaultTableModel();
-        modelB.setColumnIdentifiers(new String[]{"Student Id", "Seat Id"});
+        modelB.setColumnIdentifiers(new String[]{"Student Id", "Seat Id", "Semester"});
 
         for (Seat seat : data) {
             if (seat.getSeatId().startsWith("A")) {
                 Vector<Object> row = new Vector<>();
                 row.add(seat.getStudentId());
                 row.add(seat.getSeatId());
+                row.add(seat.getSemester());
                 modelA.addRow(row);
             } else if (seat.getSeatId().startsWith("B")) {
                 Vector<Object> row = new Vector<>();
                 row.add(seat.getStudentId());
                 row.add(seat.getSeatId());
+                row.add(seat.getSemester());
                 modelB.addRow(row);
             }
         }
@@ -143,9 +145,9 @@ public class DataTable extends JFrame  {
         setCellSize(tableA, cellWidth, cellHeight);
         setCellSize(tableB, cellWidth, cellHeight);
 
-        JLabel labelA = new JLabel("<html><font size='10'>&emsp;&nbspA</font></html>");
+        JLabel labelA = new JLabel("<html><font size='10'>&emsp;A</font></html>");
         labelA.setHorizontalAlignment(JLabel.CENTER);
-        JLabel labelB = new JLabel("<html><font size='10'>&emsp;&emsp;&emsp;B</font></html>");
+        JLabel labelB = new JLabel("<html><font size='10'>&emsp;&emsp;&emsp;&emsp;B</font></html>");
         labelB.setHorizontalAlignment(JLabel.CENTER);
 
         JLabel collegeLabel = new JLabel("KIST College of Information Technology", JLabel.CENTER);
@@ -186,10 +188,6 @@ public class DataTable extends JFrame  {
         labelPanel.add(titleLabel, gbc);
         labelPanel.add(collegeLabel, gbc);
 
-        titleLabel.setFont(titleFont);
-        // labelPanel.add(titleLabel, gbc);
-
-
         JSeparator separator1 = new JSeparator(SwingConstants.HORIZONTAL);
         separator1.setPreferredSize(new Dimension(400, 2)); // Adjust the size as needed
         separator1.setForeground(Color.BLACK); // Set the color of the line
@@ -215,8 +213,6 @@ public class DataTable extends JFrame  {
         gbc.gridy =4;
         labelPanel.add(separator2, gbc);
 
-
-
         gbc.gridy = 5;
         labelPanel.add(titleLabel, gbc);
 
@@ -232,9 +228,6 @@ public class DataTable extends JFrame  {
         gbc.gridx = 1; // Move to the next column for labelB
         gbc.insets = new Insets(10, 10, 10, 50); // Add horizontal space around labelB
         labelPanel.add(labelB, gbc);
-
-
-
 
         // Create a panel for tables and add table panels to it
         JPanel tablePanel = new JPanel(new GridLayout(1, 2, 10, 0));
@@ -255,8 +248,6 @@ public class DataTable extends JFrame  {
 
         setTitle("Seat Plan - Room " + roomNumber);
     }
-
-
 
     private void setCellSize(JTable table, int cellWidth, int cellHeight) {
         table.setRowHeight(cellHeight);
