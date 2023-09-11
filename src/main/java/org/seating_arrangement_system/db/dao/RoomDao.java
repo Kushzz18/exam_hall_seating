@@ -110,5 +110,48 @@ public class RoomDao extends Dao {
         }
         return roomCount;
     }
+
+    public List<Integer> getAvailableRoomNumbers(int hallId) {
+        List<Integer> availableRoomNumbers = new ArrayList<>();
+        String query = "SELECT room_no FROM room WHERE hall_id = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, hallId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                availableRoomNumbers.add(resultSet.getInt("room_no"));
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+        return availableRoomNumbers;
+    }
+
+    public List<Room> getAllRoomsInHall(int hallId) {
+        List<Room> rooms = new ArrayList<Room>();
+        String query = "select * from room where hall_id = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, hallId);
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()) {
+                Room room = new Room(
+                        resultSet.getInt(1),
+                        resultSet.getInt(2),
+                        resultSet.getInt(3),
+                        resultSet.getInt(4)
+                );
+                rooms.add(room);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rooms;
+
+    }
+
+
 }
 
