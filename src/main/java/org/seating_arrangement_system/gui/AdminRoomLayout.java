@@ -35,10 +35,12 @@ public class AdminRoomLayout extends CenteredLayout {
         JPanel buttonPanel = new JPanel(new GridLayout(2, 2));
         add(buttonPanel, BorderLayout.CENTER);
 
-//        for (int i = 1; i <= 4; i++) {
-//            JButton roomButton = createButton("Room " + i);
-//            buttonPanel.add(roomButton);
-//        }
+        RoundedPanel roundedButtonPanel = new RoundedPanel(20);
+        roundedButtonPanel.setLayout(new BorderLayout());
+        roundedButtonPanel.add(buttonPanel, BorderLayout.CENTER);
+
+        add(roundedButtonPanel, BorderLayout.CENTER);
+
 
         for (Room room : rooms) {
             JButton roomButton = createButton("Room " + room.getRoomNumber());
@@ -46,7 +48,7 @@ public class AdminRoomLayout extends CenteredLayout {
         }
 
 
-        JButton backButton = new JButton("Back");
+        RoundedButton backButton = new RoundedButton("Back",20);
         backButton.setPreferredSize(new Dimension(150, 50));
         backButton.addActionListener(new BackButtonListener());
         add(backButton, BorderLayout.SOUTH);
@@ -54,11 +56,13 @@ public class AdminRoomLayout extends CenteredLayout {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
+        setLocationRelativeTo(null);
+
     }
 
     private JButton createButton(String label) {
         int roomNumber = Integer.parseInt(label.substring("Room ".length()));
-        JButton button = new JButton(label);
+        RoundedButton button = new RoundedButton(label,20);
         button.setPreferredSize(new Dimension(150, 50));
 
         button.addActionListener(new RoomButtonListener(roomNumber));

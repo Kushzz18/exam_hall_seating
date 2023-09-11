@@ -15,8 +15,15 @@ public class StudentView extends CenteredLayout {
     public StudentView() {
         this.setTitle("Student View");
 
-        JButton viewAll = new JButton("View All seatplan");
-        JButton viewSingle = new JButton("View single seatplan");
+        RoundedButton viewAll = new RoundedButton("View All seatplan", 20); // 10 is the radius
+        viewAll.setPreferredSize(new Dimension(120, 50));
+
+        RoundedButton viewSingle = new RoundedButton("View single seatplan", 20);
+        viewSingle.setPreferredSize(new Dimension(120, 50));
+
+        RoundedButton back = new RoundedButton("Back", 10);
+        back.setPreferredSize(new Dimension(100, 40));
+
 
         viewAll.addActionListener(action -> {
             SeatDao seatDao = new SeatDao();
@@ -60,7 +67,7 @@ public class StudentView extends CenteredLayout {
             new SingleSeatPlan();
         });
 
-        JButton back = new JButton("Back");
+        //   JButton back = new JButton("Back");
 
         back.addActionListener(action -> {
             this.dispose();
@@ -73,5 +80,6 @@ public class StudentView extends CenteredLayout {
 
         render();
         setVisible(true);
+        setLocationRelativeTo(null);
     }
 }

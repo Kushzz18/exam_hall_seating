@@ -6,7 +6,10 @@ import javax.swing.*;
 
 public class AddHall extends FormLayout {
     AddHall() {
-        setSize(400, 300);
+
+        setSize(400, 500);
+
+        topLabel.setText("Add Hall");
 
         JLabel enterHallId = new JLabel("Enter hall id:");
         JTextField hallIdField = new JTextField(15);
@@ -17,8 +20,8 @@ public class AddHall extends FormLayout {
 
         compList.add(makeGroup(enterHallName, hallNameField));
 
-        JPanel btnPane = new JPanel();
-        JButton create = new JButton("Create");
+        RoundedPanel btnPane = new RoundedPanel(20);
+        RoundedButton create = new RoundedButton("Create",20);
 
 
         create.addActionListener(action -> {
@@ -42,7 +45,7 @@ public class AddHall extends FormLayout {
             }
         });
 
-        JButton back = new JButton("Back");
+        RoundedButton back = new RoundedButton("Back",20);
 
         back.addActionListener(action -> {
             this.dispose();
@@ -55,5 +58,6 @@ public class AddHall extends FormLayout {
         compList.add(btnPane);
         render();
         setVisible(true);
+        setLocationRelativeTo(null);
     }
 }

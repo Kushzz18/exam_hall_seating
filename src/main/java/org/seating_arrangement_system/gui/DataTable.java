@@ -241,6 +241,8 @@ public class DataTable extends JFrame  {
         // Create a panel for centering the main panel
         JPanel centeringPanel = new JPanel(new GridBagLayout());
         centeringPanel.add(mainPanel);
+        centeringPanel.setBackground(new Color(95,111,146));
+
 
         // Add the centering panel to the dialog
         add(centeringPanel);
@@ -281,6 +283,8 @@ public class DataTable extends JFrame  {
 
     void render() {
         setVisible(true);
+        setLocationRelativeTo(null);
+
     }
 
 

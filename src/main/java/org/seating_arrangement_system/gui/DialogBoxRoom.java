@@ -35,27 +35,51 @@ public class DialogBoxRoom extends CenteredLayout {
         JPanel buttonPanel = new JPanel(new GridLayout(2, 2));
         add(buttonPanel, BorderLayout.CENTER);
 
+        RoundedPanel roundedButtonPanel = new RoundedPanel(20); // Set your desired corner radius
+
+        roundedButtonPanel.setLayout(new BorderLayout());
+        roundedButtonPanel.add(buttonPanel, BorderLayout.CENTER);
+
+        add(roundedButtonPanel, BorderLayout.CENTER);
+
 //        for (int i = 1; i <= 4; i++) {
-//            JButton roomButton = createButton("Room " + i);
+//            RoundedButton roomButton = createButton("Room " + i);
 //            buttonPanel.add(roomButton);
 //        }
 
         for (Room room : rooms) {
-            JButton roomButton = createButton("Room " + room.getRoomNumber());
+            RoundedButton roomButton = createButton("Room " + room.getRoomNumber());
+            roomButton .setBackground(new Color(95, 111, 146));
             buttonPanel.add(roomButton);
         }
 
-        JButton backButton = new JButton("Back");
-        backButton.setPreferredSize(new Dimension(150, 50));
+//        RoundedButton backButton = new RoundedButton("Back");
+//        backButton.setPreferredSize(new Dimension(150, 50));
+//        backButton.addActionListener(new DialogBoxRoom.BackButtonListener());
+//        add(backButton, BorderLayout.SOUTH);
+
+        RoundedButton backButton = new RoundedButton("Back",20);
+        backButton.setBackground(new Color(95, 111, 146));
         backButton.addActionListener(new DialogBoxRoom.BackButtonListener());
-        add(backButton, BorderLayout.SOUTH);
+
+
+//        backButton.addActionListener(action -> {
+//            new DialogBoxRoom.BackButtonListener();
+//        });
+        JPanel buttonPanel2 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        buttonPanel2.setBackground(new Color(95, 111, 146));
+        buttonPanel2.add(backButton);
+
+        this.add(buttonPanel2, BorderLayout.SOUTH);
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
+        setLocationRelativeTo(null);
     }
 
-    private JButton createButton(String label) {
+    private RoundedButton createButton(String label) {
         int roomNumber = Integer.parseInt(label.substring("Room ".length()));
-        JButton button = new JButton(label);
+        RoundedButton button = new RoundedButton(label,20);
         button.setPreferredSize(new Dimension(150, 50));
 
         button.addActionListener(new RoomButtonListener(roomNumber));

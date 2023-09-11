@@ -27,35 +27,35 @@ public class AdminView extends CenteredLayout {
         setSize(400, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        JButton addHall = new JButton("Add Hall");
+        RoundedButton addHall = new RoundedButton("Add Hall",20);
 
         addHall.addActionListener(action -> {
             this.dispose();
             new AddHall();
         });
 
-        
+
         compList.add(addHall);
 
-        JButton addRoom = new JButton("Add Room");
+        RoundedButton addRoom = new RoundedButton("Add Room",20);
 
         addRoom.addActionListener(action -> {
             this.dispose();
             new AddRoom();
         });
-        
+
         compList.add(addRoom);
 
-        JButton delHall = new JButton("Delete Hall");
+        RoundedButton delHall = new RoundedButton("Delete Hall",20);
 
         delHall.addActionListener(action -> {
 
         });
 
-        
+
         compList.add(delHall);
 
-        JButton delRoom = new JButton("Delete Room");
+        RoundedButton delRoom = new RoundedButton("Delete Room",20);
 
         delRoom.addActionListener(action -> {
             this.dispose();
@@ -70,7 +70,7 @@ public class AdminView extends CenteredLayout {
 
         compList.add(delRoom);
 
-        JButton viewAll = new JButton("View All seatplan");
+        RoundedButton viewAll = new RoundedButton("View All seatplan",20);
 
         viewAll.addActionListener(action -> {
             SeatDao seatDao = new SeatDao();
@@ -105,7 +105,7 @@ public class AdminView extends CenteredLayout {
 
 
 
-        JButton logout = new JButton("Logout");
+        RoundedButton logout = new RoundedButton("Logout",20);
 
         logout.addActionListener(action -> {
             this.dispose();
@@ -113,7 +113,7 @@ public class AdminView extends CenteredLayout {
         });
 
 
-        JButton generate = new JButton("Generate Seatplan");
+        RoundedButton generate = new RoundedButton("Generate Seatplan",20);
 
         generate.addActionListener(action -> {
             SeatSizeValidator sizeValidator = new SeatSizeValidator();
@@ -131,7 +131,7 @@ public class AdminView extends CenteredLayout {
 
 
 
-        JButton export = new JButton("Export from excel");
+        RoundedButton export = new RoundedButton("Export from excel",20);
 
         export.addActionListener(action -> {
             this.dispose();
@@ -144,5 +144,6 @@ public class AdminView extends CenteredLayout {
 
         render();
         setVisible(true);
+        setLocationRelativeTo(null);
     }
 }

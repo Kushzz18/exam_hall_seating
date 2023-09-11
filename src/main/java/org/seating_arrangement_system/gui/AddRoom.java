@@ -36,9 +36,9 @@ public class AddRoom extends FormLayout {
 
         compList.add(makeGroup(benchNumberLabel, benchPerColumn));
 
-        JPanel btnPane = new JPanel();
+        RoundedPanel btnPane = new RoundedPanel(20);
 
-        JButton addRoomButton = new JButton("Add Room");
+        RoundedButton addRoomButton = new RoundedButton("Add Room",20);
 
         addRoomButton.addActionListener(action -> {
             Hall hall = (Hall)hallSelect.getSelectedItem();
@@ -61,7 +61,7 @@ public class AddRoom extends FormLayout {
 
         });
 
-        JButton back = new JButton("Back");
+        RoundedButton back = new RoundedButton("Back",20);
 
         back.addActionListener(action -> {
             this.dispose();
@@ -74,5 +74,6 @@ public class AddRoom extends FormLayout {
         compList.add(btnPane);
         render();
         setVisible(true);
+        setLocationRelativeTo(null);
     }
 }

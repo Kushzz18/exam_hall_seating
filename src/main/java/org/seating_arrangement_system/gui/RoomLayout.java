@@ -6,18 +6,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class RoomLayout extends CenteredLayout {
-    private JPanel roomPanel;
+    private RoundedPanel roomPanel;
 
     public RoomLayout() {
         setTitle("Room Layout Example");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        roomPanel = new JPanel();
+        roomPanel = new RoundedPanel(20);
         roomPanel.setLayout(new GridLayout(5, 5)); // Customize rows and columns
 
         for (int row = 1; row <= 5; row++) {
             for (int col = 1; col <= 5; col++) {
-                JButton seatButton = createSeatButton("Seat " + row + "-" + col);
+                RoundedButton seatButton = createSeatButton("Seat " + row + "-" + col);
                 roomPanel.add(seatButton);
             }
         }
@@ -30,8 +30,8 @@ public class RoomLayout extends CenteredLayout {
         setVisible(true);
     }
 
-    private JButton createSeatButton(String seatName) {
-        JButton seatButton = new JButton(seatName);
+    private RoundedButton createSeatButton(String seatName) {
+        RoundedButton seatButton = new RoundedButton(seatName,20);
         seatButton.setPreferredSize(new Dimension(70, 50));
 
         seatButton.addActionListener(new ActionListener() {

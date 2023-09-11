@@ -25,7 +25,8 @@ public class AdminDataTable extends JFrame implements ActionListener {
     private static final int cellWidth = 115;
 
     AdminDataTable(List<Seat> data, String[] headers, int roomNumber) {
-        setSize(1200, 1200);
+        setSize(800, 800);
+        getContentPane().setBackground(new Color(95, 111, 146));
 
         DefaultTableModel modelA = new DefaultTableModel();
         modelA.setColumnIdentifiers(new String[]{"Student Id", "Seat Id", "Semester"});
@@ -142,6 +143,11 @@ public class AdminDataTable extends JFrame implements ActionListener {
         tablePanel.add(panelA);
         tablePanel.add(panelB);
 
+        labelPanel.setBackground(new Color(95,111,146));
+        tablePanel.setBackground(new Color(95,111,146));
+
+
+
         // Add label panel and table panel to the main panel
         mainPanel.add(labelPanel, BorderLayout.NORTH);
         mainPanel.add(tablePanel, BorderLayout.CENTER);
@@ -149,6 +155,8 @@ public class AdminDataTable extends JFrame implements ActionListener {
         // Create a panel for centering the main panel
         JPanel centeringPanel = new JPanel(new GridBagLayout());
         centeringPanel.add(mainPanel);
+        centeringPanel.setBackground(new Color(95,111,146));
+
 
         // Add the centering panel to the dialog
         add(centeringPanel);
@@ -175,9 +183,14 @@ public class AdminDataTable extends JFrame implements ActionListener {
     }
 
     private void addButton() {
-        JButton printButton = new JButton("Print");
+        RoundedButton printButton = new RoundedButton("Print",20);
         printButton.addActionListener(this);
-        add(printButton, BorderLayout.SOUTH);
+        JPanel buttonPanel2 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        buttonPanel2.setBackground(new Color(95, 111, 146));
+        buttonPanel2.add(printButton);
+
+        add(buttonPanel2, BorderLayout.SOUTH);
+        printButton. setPreferredSize(new Dimension(100, 40));
     }
 
     public class CenterTableCellRenderer extends DefaultTableCellRenderer {
@@ -194,6 +207,7 @@ public class AdminDataTable extends JFrame implements ActionListener {
 
     void render() {
         setVisible(true);
+        setLocationRelativeTo(null);
     }
 
     @Override

@@ -11,7 +11,8 @@ import java.util.List;
 
 public class DeleteRoom extends FormLayout {
     public DeleteRoom() {
-        setSize(800, 800);
+        setSize(400, 500);
+        topLabel.setText("Select room");
 
         HallDao hallDao = new HallDao();
         List<Hall> hallList = hallDao.getAll();
@@ -27,9 +28,9 @@ public class DeleteRoom extends FormLayout {
         JTextField roomNoField = new JTextField(15);
         compList.add(makeGroup(roomNoLabel, roomNoField));
 
-        JPanel btnPane = new JPanel();
+        RoundedPanel btnPane = new RoundedPanel(20);
 
-        JButton delete = new JButton("Delete");
+        RoundedButton delete = new RoundedButton("Delete",20);
 
         RoomDao roomDao = new RoomDao();
 
@@ -50,7 +51,7 @@ public class DeleteRoom extends FormLayout {
             }
         });
 
-        JButton back = new JButton("Back");
+        RoundedButton back = new RoundedButton("Back",20);
 
         back.addActionListener(action -> {
             this.dispose();
@@ -63,5 +64,6 @@ public class DeleteRoom extends FormLayout {
         compList.add(btnPane);
         render();
         setVisible(true);
+        setLocationRelativeTo(null);
     }
 }

@@ -8,24 +8,29 @@ import java.util.Arrays;
 
 public class AdminLoginForm extends FormLayout {
     AdminLoginForm() {
-        setSize(400, 300);
+        setSize(400, 500);
         topLabel.setText("Admin Login Form");
         topLabel.setFont(new Font("SF Pro", Font.PLAIN, 18));
         topLabel.setForeground(Color.black);
 
         JLabel enterName = new JLabel("Enter username:");
         JTextField nameField = new JTextField(15);
+        nameField.setPreferredSize(new Dimension(110,45));
         compList.add(makeGroup(enterName, nameField));
 
         JLabel enterPass = new JLabel("Enter Password:");
         JPasswordField passField = new JPasswordField(15);
+        passField.setPreferredSize(new Dimension(110,45));
+
 
         compList.add(makeGroup(enterPass, passField));
 
-        JPanel btnPane = new JPanel();
-        JButton login = new JButton("Login");
+        RoundedPanel btnPane = new RoundedPanel(10);
+        btnPane.setPreferredSize(new Dimension(110,45));
 
-        
+        RoundedButton login = new RoundedButton("Login",10);
+
+
         login.addActionListener((java.awt.event.ActionEvent event) -> {
             String username = nameField.getText();
             String password = passField.getText();
@@ -39,7 +44,7 @@ public class AdminLoginForm extends FormLayout {
             }
         });
 
-        JButton back = new JButton("Back");
+        RoundedButton back = new RoundedButton("Back",10);
 
         back.addActionListener(action -> {
             this.dispose();
@@ -52,5 +57,7 @@ public class AdminLoginForm extends FormLayout {
         compList.add(btnPane);
         render();
         setVisible(true);
+        setLocationRelativeTo(null);
+
     }
 }

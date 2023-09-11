@@ -22,6 +22,10 @@ public class CenteredLayout extends JFrame {
         middlePane.setLayout(new GridBagLayout());
         this.setSize(400, 500);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+        topPane.setBackground(new Color( 95,111,146));
+        middlePane.setBackground(new Color(95,111,146));
     }
 
     void render () {
@@ -35,6 +39,10 @@ public class CenteredLayout extends JFrame {
             c.gridy = i;
             middlePane.add(compList.get(i), c);
         }
+
+        RoundedPanel roundedMiddlePanel = new RoundedPanel(20); // Set your desired corner radius
+        roundedMiddlePanel.setLayout(new BorderLayout());
+        roundedMiddlePanel.add(middlePane, BorderLayout.CENTER);
 
         add(topPane, BorderLayout.NORTH);
         add(middlePane, BorderLayout.CENTER);

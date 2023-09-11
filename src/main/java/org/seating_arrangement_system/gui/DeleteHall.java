@@ -22,9 +22,9 @@ public class DeleteHall extends FormLayout {
         hallSelect.setSelectedIndex(0);
         compList.add(hallSelect);
 
-        JPanel btnPane = new JPanel();
+        RoundedPanel btnPane = new RoundedPanel(20);
 
-        JButton delete = new JButton("Delete");
+        RoundedButton delete = new RoundedButton("Delete",20);
 
         delete.addActionListener(action -> {
             Hall hall = (Hall) hallSelect.getSelectedItem();
@@ -38,7 +38,7 @@ public class DeleteHall extends FormLayout {
             }
         });
 
-        JButton back = new JButton("Back");
+        RoundedButton back = new RoundedButton("Back",20);
 
         back.addActionListener(action -> {
             this.dispose();
@@ -51,5 +51,6 @@ public class DeleteHall extends FormLayout {
         compList.add(btnPane);
         render();
         setVisible(true);
+        setLocationRelativeTo(null);
     }
 }

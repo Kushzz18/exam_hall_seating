@@ -17,8 +17,8 @@ public class SingleSeatPlan extends FormLayout {
         JTextField idField = new JTextField(15);
         compList.add(makeGroup(enterName, idField));
 
-        JPanel btnPane = new JPanel();
-        JButton search = new JButton("Search");
+        RoundedPanel btnPane = new RoundedPanel(10);
+        RoundedButton search = new RoundedButton("Search",20);
 
         search.addActionListener(action -> {
             SeatDao seatDao = new SeatDao();
@@ -36,7 +36,7 @@ public class SingleSeatPlan extends FormLayout {
             }
         });
 
-        JButton back = new JButton("Back");
+        RoundedButton back = new RoundedButton("Back",20);
 
         back.addActionListener(action -> {
             this.dispose();
@@ -50,5 +50,6 @@ public class SingleSeatPlan extends FormLayout {
         compList.add(btnPane);
         render();
         setVisible(true);
+        setLocationRelativeTo(null);
     }
 }
