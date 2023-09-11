@@ -27,7 +27,7 @@ public class Room {
         return columnNumber;
     }
 
-    public int getBrenchNumber() {
+    public int getBenchNumber() {
         return benchNumber;
     }
 
