@@ -5,6 +5,7 @@ import org.seating_arrangement_system.db.dao.AdminDao;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
+import java.awt.event.*;
 
 public class AdminLoginForm extends FormLayout {
     AdminLoginForm() {
@@ -24,6 +25,16 @@ public class AdminLoginForm extends FormLayout {
 
 
         compList.add(makeGroup(enterPass, passField));
+
+
+        // Add an ActionListener to the username field to listen for Enter key press
+        nameField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // When Enter is pressed, move the focus to the password field
+                passField.requestFocusInWindow();
+            }
+        });
 
         RoundedPanel btnPane = new RoundedPanel(10);
         btnPane.setPreferredSize(new Dimension(110,45));

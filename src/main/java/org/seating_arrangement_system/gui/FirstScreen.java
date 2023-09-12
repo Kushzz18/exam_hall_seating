@@ -18,7 +18,7 @@ public class FirstScreen extends CenteredLayout {
         bgImageLabel = new JLabel();
 
         // Load the background image
-        ImageIcon bgImageIcon = new ImageIcon("hall.jpg");
+        ImageIcon bgImageIcon = new ImageIcon("hall.png");
         Image bgImage = bgImageIcon.getImage();
 
         // Create a panel to hold the background image
@@ -42,7 +42,7 @@ public class FirstScreen extends CenteredLayout {
         backgroundPanel.setLayout(new BorderLayout());
 
         topLabel.setText("<html><p style='font-size: 25px; line-height: 1.5; text-align: center;'>Welcome to Exam Seat Plan Management System</p></html>");
-        topLabel.setFont(new Font("SansSerif", Font.BOLD, 25));
+        topLabel.setFont(new Font("SansSerif", Font.BOLD, 27));
         topLabel.setForeground(Color.BLACK);
 
         JPanel centerPanel = new JPanel(new BorderLayout());
@@ -50,9 +50,9 @@ public class FirstScreen extends CenteredLayout {
 
         centerPanel.add(topLabel, BorderLayout.NORTH);
 
-        JButton continueButton = new JButton("Continue");
+        JButton continueButton = new JButton("CONTINUE");
         Font buttonFont = continueButton.getFont();
-        continueButton.setFont(new Font(buttonFont.getName(), Font.PLAIN, 20));
+        continueButton.setFont(new Font(buttonFont.getName(), Font.BOLD, 27));
         continueButton.setPreferredSize(new Dimension(150, 50));
         continueButton.setContentAreaFilled(false);
         continueButton.setBorderPainted(false);
@@ -61,6 +61,8 @@ public class FirstScreen extends CenteredLayout {
             this.dispose();
             new Welcome();
         });
+
+        getRootPane().setDefaultButton(continueButton);
 
         centerPanel.add(continueButton, BorderLayout.CENTER);
 

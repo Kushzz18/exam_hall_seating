@@ -1,5 +1,5 @@
-
 package org.seating_arrangement_system.gui;
+
 
 import org.seating_arrangement_system.db.dao.SeatDao;
 
@@ -35,46 +35,34 @@ public class DialogBoxRoom extends CenteredLayout {
         JPanel buttonPanel = new JPanel(new GridLayout(2, 2));
         add(buttonPanel, BorderLayout.CENTER);
 
-        RoundedPanel roundedButtonPanel = new RoundedPanel(20); // Set your desired corner radius
-
+        RoundedPanel roundedButtonPanel = new RoundedPanel(20);
         roundedButtonPanel.setLayout(new BorderLayout());
         roundedButtonPanel.add(buttonPanel, BorderLayout.CENTER);
 
         add(roundedButtonPanel, BorderLayout.CENTER);
 
-//        for (int i = 1; i <= 4; i++) {
-//            RoundedButton roomButton = createButton("Room " + i);
-//            buttonPanel.add(roomButton);
-//        }
 
         for (Room room : rooms) {
-            RoundedButton roomButton = createButton("Room " + room.getRoomNumber());
-            roomButton .setBackground(new Color(95, 111, 146));
+            JButton roomButton = createButton("Room " + room.getRoomNumber());
             buttonPanel.add(roomButton);
         }
 
-//        RoundedButton backButton = new RoundedButton("Back");
-//        backButton.setPreferredSize(new Dimension(150, 50));
-//        backButton.addActionListener(new DialogBoxRoom.BackButtonListener());
-//        add(backButton, BorderLayout.SOUTH);
 
         RoundedButton backButton = new RoundedButton("Back",20);
-        backButton.setBackground(new Color(95, 111, 146));
+        backButton.setPreferredSize(new Dimension(150, 50));
         backButton.addActionListener(new DialogBoxRoom.BackButtonListener());
+        add(backButton, BorderLayout.SOUTH);
 
-
-//        backButton.addActionListener(action -> {
-//            new DialogBoxRoom.BackButtonListener();
-//        });
         JPanel buttonPanel2 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        buttonPanel2.setBackground(new Color(95, 111, 146));
+        //buttonPanel2.setBackground(new Color(95, 111, 146));
         buttonPanel2.add(backButton);
-
         this.add(buttonPanel2, BorderLayout.SOUTH);
+
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setLocationRelativeTo(null);
+
     }
 
     private RoundedButton createButton(String label) {
@@ -130,3 +118,4 @@ public class DialogBoxRoom extends CenteredLayout {
 
 
 }
+

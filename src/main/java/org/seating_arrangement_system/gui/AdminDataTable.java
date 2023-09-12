@@ -26,7 +26,7 @@ public class AdminDataTable extends JFrame implements ActionListener {
 
     AdminDataTable(List<Seat> data, String[] headers, int roomNumber) {
         setSize(800, 800);
-        getContentPane().setBackground(new Color(95, 111, 146));
+      //  getContentPane().setBackground(new Color(95, 111, 146));
 
         DefaultTableModel modelA = new DefaultTableModel();
         modelA.setColumnIdentifiers(new String[]{"Student Id", "Seat Id", "Semester"});
@@ -143,8 +143,8 @@ public class AdminDataTable extends JFrame implements ActionListener {
         tablePanel.add(panelA);
         tablePanel.add(panelB);
 
-        labelPanel.setBackground(new Color(95,111,146));
-        tablePanel.setBackground(new Color(95,111,146));
+//        labelPanel.setBackground(new Color(95,111,146));
+//        tablePanel.setBackground(new Color(95,111,146));
 
 
 
@@ -155,7 +155,7 @@ public class AdminDataTable extends JFrame implements ActionListener {
         // Create a panel for centering the main panel
         JPanel centeringPanel = new JPanel(new GridBagLayout());
         centeringPanel.add(mainPanel);
-        centeringPanel.setBackground(new Color(95,111,146));
+      //  centeringPanel.setBackground(new Color(95,111,146));
 
 
         // Add the centering panel to the dialog
@@ -186,7 +186,7 @@ public class AdminDataTable extends JFrame implements ActionListener {
         RoundedButton printButton = new RoundedButton("Print",20);
         printButton.addActionListener(this);
         JPanel buttonPanel2 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        buttonPanel2.setBackground(new Color(95, 111, 146));
+    //    buttonPanel2.setBackground(new Color(95, 111, 146));
         buttonPanel2.add(printButton);
 
         add(buttonPanel2, BorderLayout.SOUTH);

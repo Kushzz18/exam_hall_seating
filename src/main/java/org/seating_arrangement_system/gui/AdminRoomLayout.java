@@ -53,6 +53,11 @@ public class AdminRoomLayout extends CenteredLayout {
         backButton.addActionListener(new BackButtonListener());
         add(backButton, BorderLayout.SOUTH);
 
+        JPanel buttonPanel2 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        //buttonPanel2.setBackground(new Color(95, 111, 146));
+        buttonPanel2.add(backButton);
+        this.add(buttonPanel2, BorderLayout.SOUTH);
+
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);

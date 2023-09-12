@@ -10,9 +10,9 @@ public class Welcome extends CenteredLayout{
     public Welcome() {
         this.setTitle("Welcome");
 
-        topLabel.setText(" Are you??");
-        topLabel.setFont(new Font("SansSerif", Font.BOLD, 25));
-        topLabel.setForeground(Color.BLACK);
+//        topLabel.setText(" Are you??");
+//        topLabel.setFont(new Font("SansSerif", Font.BOLD, 25));
+//        topLabel.setForeground(Color.BLACK);
 
 
         // Load icons
