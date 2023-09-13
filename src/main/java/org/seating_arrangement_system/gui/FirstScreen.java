@@ -50,7 +50,26 @@ public class FirstScreen extends CenteredLayout {
 
         centerPanel.add(topLabel, BorderLayout.NORTH);
 
-        JButton continueButton = new JButton("CONTINUE");
+        JButton continueButton = new JButton("CONTINUE"){
+            @Override
+            protected void paintComponent(Graphics g) {
+            Graphics2D g2d = (Graphics2D) g;
+            int width = getWidth();
+            int height = getHeight();
+
+            // Define gradient colors for the highlighted effect
+                Color gradientStartColor = new Color(255, 255, 255, 200); // Adjust the alpha value
+            Color gradientEndColor = new Color(255, 255, 255, 0);
+
+            // Create a gradient paint
+            GradientPaint gradient = new GradientPaint(0, 0, gradientStartColor, 0, height, gradientEndColor);
+
+            g2d.setPaint(gradient);
+            g2d.fillRect(0, 0, width, height);
+
+            super.paintComponent(g);
+        }
+        };
         Font buttonFont = continueButton.getFont();
         continueButton.setFont(new Font(buttonFont.getName(), Font.BOLD, 27));
         continueButton.setPreferredSize(new Dimension(150, 50));

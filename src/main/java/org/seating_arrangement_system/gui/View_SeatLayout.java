@@ -8,12 +8,18 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+import java.awt.event.ActionEvent;
 
-public class View_SeatLayout extends JFrame {
+import java.awt.print.*;
+
+public class View_SeatLayout extends JFrame implements ActionListener {
     private JTable tableA;
     private JTable tableB;
     private static final int cellWidth = 115;
@@ -25,6 +31,7 @@ public class View_SeatLayout extends JFrame {
         this.headers = headers;
         setSize(750, 750);
         setTitle(title);
+        setLocationRelativeTo(null);
 
         // Organize data into two separate lists, one for A and one for B
         List<Seat> dataA = new Vector<>();
@@ -184,6 +191,7 @@ public class View_SeatLayout extends JFrame {
 
         // Add the centering panel to the frame
         add(centeringPanel);
+        addButton();
 
         setTitle("Seat Plan - Room " + roomNumber);
 
@@ -203,5 +211,63 @@ public class View_SeatLayout extends JFrame {
         // Set the preferred table size to match the total width
         Dimension tableSize = new Dimension(totalWidth, table.getPreferredSize().height);
         table.setPreferredScrollableViewportSize(tableSize);
+    }
+    private void addButton() {
+        RoundedButton printButton = new RoundedButton("Print",20);
+        printButton.addActionListener(this);
+        add(printButton, BorderLayout.SOUTH);
+        JPanel buttonPanel2 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        //buttonPanel2.setBackground(new Color(95, 111, 146));
+        buttonPanel2.add(printButton);
+        this.add(buttonPanel2, BorderLayout.SOUTH);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals("Print")) {
+            try {
+                // Create a PrinterJob
+                PrinterJob printerJob = PrinterJob.getPrinterJob();
+
+                // Set the printable content to the entire frame
+                printerJob.setPrintable(new Printable() {
+                    @Override
+                    public int print(Graphics g, PageFormat pf, int page) throws PrinterException {
+                        if (page > 0) {
+                            return NO_SUCH_PAGE;
+                        }
+
+                        // Calculate the scale factor to fit the frame within the page
+                        double scaleFactor = pf.getImageableWidth() / getWidth();
+                        double scaleYFactor = pf.getImageableHeight() / getHeight();
+                        double scale = Math.min(scaleFactor, scaleYFactor);
+
+                        // Apply the scale transformation to the graphics object
+                        Graphics2D g2d = (Graphics2D) g;
+                        g2d.translate(pf.getImageableX(), pf.getImageableY());
+                        g2d.scale(scale, scale);
+
+                        // Paint the frame onto the page, excluding the button
+                        printAll(g2d);
+
+                        return PAGE_EXISTS;
+                    }
+                });
+
+                if (printerJob.printDialog()) {
+                    // Remove the "Print" button temporarily
+                    remove(getContentPane().getComponent(1));
+                    validate();
+
+                    printerJob.print();
+
+                    // Add the "Print" button back after printing
+                    addButton();
+                    validate();
+                }
+            } catch (PrinterException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 }

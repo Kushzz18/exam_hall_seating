@@ -14,6 +14,7 @@ import java.awt.print.PrinterJob;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.table.DefaultTableCellRenderer;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import java.awt.print.*;
 import javax.swing.JSeparator;
@@ -23,8 +24,18 @@ public class AdminDataTable extends JFrame implements ActionListener {
     private JTable tableA;
     private JTable tableB;
     private static final int cellWidth = 115;
+    private AtomicBoolean printCanceled = new AtomicBoolean(false);
+
+    private List<Seat> data;
+    private String[] headers;
+    private int roomNumber;
+
 
     AdminDataTable(List<Seat> data, String[] headers, int roomNumber) {
+
+        this.data = data;
+        this.headers = headers;
+        this.roomNumber = roomNumber;
         setSize(800, 800);
       //  getContentPane().setBackground(new Color(95, 111, 146));
 
@@ -160,9 +171,35 @@ public class AdminDataTable extends JFrame implements ActionListener {
 
         // Add the centering panel to the dialog
         add(centeringPanel);
-        addButton();
+//        addButton();
+//        addLayout();
 
         setTitle("Seat Plan - Room " + roomNumber);
+        addButton();
+    }
+
+    public void addButton(){
+        RoundedButton printButton = new RoundedButton("Print",20);
+        RoundedButton layoutButton = new RoundedButton("View Seat Layout",20);
+
+        // Add action listeners to the buttons
+        printButton.addActionListener(this);
+        layoutButton.addActionListener(this);
+
+        // Create a panel for the buttons and position them at the bottom
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEADING)); // Left-aligned
+        buttonPanel.add(layoutButton);
+
+        JPanel buttonPanelRight = new JPanel(new FlowLayout(FlowLayout.TRAILING)); // Right-aligned
+        buttonPanelRight.add(printButton);
+
+        // Create a bottom panel to hold the button panels
+        JPanel bottomPanel = new JPanel(new BorderLayout());
+        bottomPanel.add(buttonPanel, BorderLayout.WEST);
+        bottomPanel.add(buttonPanelRight, BorderLayout.EAST);
+
+        // Add the bottom panel to the frame
+        add(bottomPanel, BorderLayout.SOUTH);
     }
 
     private void setCellSize(JTable table, int cellWidth, int cellHeight) {
@@ -182,16 +219,29 @@ public class AdminDataTable extends JFrame implements ActionListener {
         table.setPreferredScrollableViewportSize(tableSize);
     }
 
-    private void addButton() {
-        RoundedButton printButton = new RoundedButton("Print",20);
-        printButton.addActionListener(this);
-        JPanel buttonPanel2 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-    //    buttonPanel2.setBackground(new Color(95, 111, 146));
-        buttonPanel2.add(printButton);
-
-        add(buttonPanel2, BorderLayout.SOUTH);
-        printButton. setPreferredSize(new Dimension(100, 40));
-    }
+//    private void addButton() {
+//        RoundedButton printButton = new RoundedButton("Print",20);
+//        printButton.addActionListener(this);
+//        JPanel buttonPanel2 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+//        buttonPanel2.setPreferredSize(new Dimension(150,50));
+//    //    buttonPanel2.setBackground(new Color(95, 111, 146));
+//        buttonPanel2.add(printButton);
+//
+//        add(buttonPanel2, BorderLayout.SOUTH);
+//        printButton. setPreferredSize(new Dimension(100, 40));
+//    }
+//    private void addLayout() {
+//        RoundedButton layoutButton = new RoundedButton("View Seat Layout",20);
+//        layoutButton.addActionListener(this);
+//        JPanel buttonPanel3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+//        buttonPanel3.setPreferredSize(new Dimension(150,50));
+//
+//        //    buttonPanel2.setBackground(new Color(95, 111, 146));
+//        buttonPanel3.add(layoutButton);
+//
+//        add(buttonPanel3, BorderLayout.SOUTH);
+//        layoutButton. setPreferredSize(new Dimension(100, 40));
+//    }
 
     public class CenterTableCellRenderer extends DefaultTableCellRenderer {
         public CenterTableCellRenderer() {
@@ -247,15 +297,35 @@ public class AdminDataTable extends JFrame implements ActionListener {
                     remove(getContentPane().getComponent(1));
                     validate();
 
-                    printerJob.print();
+                    try {
+                        printerJob.print();
+                    } catch (PrinterAbortException ex) {
+                        printCanceled.set(true);
+                    }
 
-                    // Add the "Print" button back after printing
+                    // Add the "Print" button back
                     addButton();
                     validate();
+
+                    if (!printCanceled.get()) {
+                        // Print was successful
+                    } else {
+                        // Print was canceled
+                        // Handle the case where the print job was canceled
+                    }
                 }
             } catch (PrinterException ex) {
                 ex.printStackTrace();
             }
+        }
+
+        else if (e.getActionCommand().equals("View Seat Layout")) {
+            // Create a new instance of the ViewSeatLayout class
+            View_SeatLayout seatLayoutFrame = new View_SeatLayout("Seat Layout ", data, headers, roomNumber);
+            seatLayoutFrame.setVisible(true);
+
+            // Dispose the current AdminDataTable frame
+            dispose();
         }
     }
 }
