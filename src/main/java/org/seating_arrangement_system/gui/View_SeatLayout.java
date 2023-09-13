@@ -3,51 +3,74 @@ package org.seating_arrangement_system.gui;
 import org.seating_arrangement_system.db.models.Seat;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
-import javax.swing.table.DefaultTableCellRenderer;
 
-import javax.swing.JSeparator;
-
-public class DataTable extends JFrame {
+public class View_SeatLayout extends JFrame {
     private JTable tableA;
     private JTable tableB;
     private static final int cellWidth = 115;
+    private List<Seat> data;
+    private String[] headers;
 
-    public DataTable(List<Seat> data, String[] headers, int roomNumber) {
+    public View_SeatLayout(String title, List<Seat> data, String[] headers, int roomNumber) {
+        this.data = data;
+        this.headers = headers;
         setSize(750, 750);
+        setTitle(title);
 
-        DefaultTableModel modelA = new DefaultTableModel();
-        modelA.setColumnIdentifiers(new String[]{"Student Id", "Seat Id", "Semester"});
-
-        DefaultTableModel modelB = new DefaultTableModel();
-        modelB.setColumnIdentifiers(new String[]{"Student Id", "Seat Id", "Semester"});
+        // Organize data into two separate lists, one for A and one for B
+        List<Seat> dataA = new Vector<>();
+        List<Seat> dataB = new Vector<>();
 
         for (Seat seat : data) {
             if (seat.getSeatId().startsWith("A")) {
-                Vector<Object> row = new Vector<>();
-                row.add(seat.getStudentId());
-                row.add(seat.getSeatId());
-                row.add(seat.getSemester());
-                modelA.addRow(row);
+                dataA.add(seat);
             } else if (seat.getSeatId().startsWith("B")) {
-                Vector<Object> row = new Vector<>();
-                row.add(seat.getStudentId());
-                row.add(seat.getSeatId());
-                row.add(seat.getSemester());
-                modelB.addRow(row);
+                dataB.add(seat);
             }
         }
+// Assuming data is a list of seats where each seat has a student ID and seat ID
+// Create a map to store the mapping of seat IDs to student IDs
+        Map<String, String> seatToStudentMap = new HashMap<>();
+        for (Seat seat : data) {
+            seatToStudentMap.put(seat.getSeatId(), String.valueOf(seat.getStudentId()));
+        }
+
+// Create seat layouts for A and B
+        String[][] seatLayoutA = new String[5][2]; // 5 rows and 2 columns for section A
+        String[][] seatLayoutB = new String[5][2]; // 5 rows and 2 columns for section B
+
+// Populate the seatLayout arrays with student IDs based on seat IDs
+        for (int row = 0; row < 5; row++) {
+            for (int col = 0; col < 2; col++) {
+                String seatIdA = "A" + (row + 1) + (col == 0 ? "X" : "Y");
+                String seatIdB = "B" + (row + 1) + (col == 0 ? "X" : "Y");
+
+                String studentIdA = seatToStudentMap.get(seatIdA);
+                String studentIdB = seatToStudentMap.get(seatIdB);
+
+                seatLayoutA[row][col] = studentIdA != null ? studentIdA : "";
+                seatLayoutB[row][col] = studentIdB != null ? studentIdB : "";
+            }
+        }
+
+// Create table models for A and B
+        DefaultTableModel modelA = new DefaultTableModel(seatLayoutA, new String[]{"AX", "AY"});
+        DefaultTableModel modelB = new DefaultTableModel(seatLayoutB, new String[]{"BX", "BY"});
+
+// Create tables with the models
         tableA = new JTable(modelA);
         tableB = new JTable(modelB);
 
-        DefaultTableCellRenderer centerRenderer = new CenterTableCellRenderer();
+        DefaultTableCellRenderer centerRenderer = new DataTable.CenterTableCellRenderer();
         tableA.setDefaultRenderer(Object.class, centerRenderer); // Object.class means it will apply to all columns
         tableB.setDefaultRenderer(Object.class, centerRenderer);
 
@@ -136,11 +159,20 @@ public class DataTable extends JFrame {
         gbc.gridx = 1; // Move to the next column for labelB
         gbc.insets = new Insets(10, 10, 10, 50); // Add horizontal space around labelB
         labelPanel.add(labelB, gbc);
+        // Adjust the layout of tables
+        tableA.setShowGrid(true);
+        tableA.setGridColor(Color.BLACK);
+        tableB.setShowGrid(true);
+        tableB.setGridColor(Color.BLACK);
 
-        // Create a panel for tables and add table panels to it
+        // Add scroll panes to tables
+        JScrollPane scrollPaneA = new JScrollPane(tableA);
+        JScrollPane scrollPaneB = new JScrollPane(tableB);
+
+        // Create a panel for tables and add table scroll panes to it
         JPanel tablePanel = new JPanel(new GridLayout(1, 2, 10, 0));
-        tablePanel.add(panelA);
-        tablePanel.add(panelB);
+        tablePanel.add(scrollPaneA);
+        tablePanel.add(scrollPaneB);
 
         // Add label panel and table panel to the main panel
         mainPanel.add(labelPanel, BorderLayout.NORTH);
@@ -149,17 +181,13 @@ public class DataTable extends JFrame {
         // Create a panel for centering the main panel
         JPanel centeringPanel = new JPanel(new GridBagLayout());
         centeringPanel.add(mainPanel);
-        //centeringPanel.setBackground(new Color(95,111,146));
 
         // Add the centering panel to the frame
         add(centeringPanel);
 
-        // Add the "View Seat Layout" button
-        addButton("View Seat Layout", 20, BorderLayout.WEST,roomNumber,data,null);
-
         setTitle("Seat Plan - Room " + roomNumber);
-    }
 
+    }
     private void setCellSize(JTable table, int cellWidth, int cellHeight) {
         table.setRowHeight(cellHeight);
         TableColumnModel columnModel = table.getColumnModel();
@@ -175,40 +203,5 @@ public class DataTable extends JFrame {
         // Set the preferred table size to match the total width
         Dimension tableSize = new Dimension(totalWidth, table.getPreferredSize().height);
         table.setPreferredScrollableViewportSize(tableSize);
-    }
-    public void addButton(String label, int fontSize, String west, int roomNumber, List<Seat> data, String[] headers) {
-        RoundedButton button = new RoundedButton(label, fontSize);
-
-        button.addActionListener(e -> {
-            try {
-                View_SeatLayout seatLayout = new View_SeatLayout("Seat Plan - Room " + roomNumber, data, headers, roomNumber);
-                seatLayout.setVisible(true);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        });
-
-
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        buttonPanel.add(button);
-
-        getContentPane().add(buttonPanel, BorderLayout.SOUTH);
-        button.setPreferredSize(new Dimension(150, 40));
-    }
-
-    public static class CenterTableCellRenderer extends DefaultTableCellRenderer {
-        public CenterTableCellRenderer() {
-            setHorizontalAlignment(SwingConstants.CENTER);
-        }
-
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            return component;
-        }
-    }
-    void render() {
-        setVisible(true);
-        setLocationRelativeTo(null);
     }
 }
