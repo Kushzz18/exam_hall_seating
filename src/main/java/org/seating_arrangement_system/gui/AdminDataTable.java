@@ -275,9 +275,9 @@ public class AdminDataTable extends JFrame implements ActionListener {
                             return NO_SUCH_PAGE;
                         }
 
-                        // Calculate the scale factor to fit the frame within the page
-                        double scaleFactor = pf.getImageableWidth() / getWidth();
-                        double scaleYFactor = pf.getImageableHeight() / getHeight();
+                        // Calculate the scale factor to fit the content within the page
+                        double scaleFactor = pf.getImageableWidth() / getContentPane().getWidth();
+                        double scaleYFactor = pf.getImageableHeight() / getContentPane().getHeight();
                         double scale = Math.min(scaleFactor, scaleYFactor);
 
                         // Apply the scale transformation to the graphics object
@@ -285,11 +285,12 @@ public class AdminDataTable extends JFrame implements ActionListener {
                         g2d.translate(pf.getImageableX(), pf.getImageableY());
                         g2d.scale(scale, scale);
 
-                        // Paint the frame onto the page, excluding the button
-                        printAll(g2d);
+                        // Paint the content of the content pane (excluding the header)
+                        getContentPane().printAll(g2d);
 
                         return PAGE_EXISTS;
                     }
+
                 });
 
                 if (printerJob.printDialog()) {

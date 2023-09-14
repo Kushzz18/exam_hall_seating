@@ -238,8 +238,8 @@ public class View_SeatLayout extends JFrame implements ActionListener {
                         }
 
                         // Calculate the scale factor to fit the frame within the page
-                        double scaleFactor = pf.getImageableWidth() / getWidth();
-                        double scaleYFactor = pf.getImageableHeight() / getHeight();
+                        double scaleFactor = pf.getImageableWidth() / getContentPane().getWidth();
+                        double scaleYFactor = pf.getImageableHeight() / getContentPane().getHeight();
                         double scale = Math.min(scaleFactor, scaleYFactor);
 
                         // Apply the scale transformation to the graphics object
@@ -248,7 +248,7 @@ public class View_SeatLayout extends JFrame implements ActionListener {
                         g2d.scale(scale, scale);
 
                         // Paint the frame onto the page, excluding the button
-                        printAll(g2d);
+                        getContentPane().printAll(g2d);
 
                         return PAGE_EXISTS;
                     }
