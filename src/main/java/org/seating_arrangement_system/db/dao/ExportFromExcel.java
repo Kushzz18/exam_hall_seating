@@ -1,5 +1,7 @@
 package org.seating_arrangement_system.db.dao;
 
+import org.seating_arrangement_system.gui.AdminView;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.sql.Connection;
@@ -11,7 +13,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class ExportFromExcel extends Dao {
-
+    private boolean exportCanceled = false;
     public ExportFromExcel() {
         int batchSize = 20;
 
@@ -63,10 +65,22 @@ public class ExportFromExcel extends Dao {
                 connection.commit();
                 connection.close();
                 System.out.println("Data has been inserted successfully.");
+
+
+            }else{
+                exportCanceled = true;
             }
+
         } catch (Exception exception) {
             exception.printStackTrace();
+        }finally {
+            // Step 3: After export, check the flag and take appropriate action
+            if (exportCanceled) {
+                // The export was canceled, take the user back to the admin view
+                new AdminView();
+            }
         }
+
     }
 }
 

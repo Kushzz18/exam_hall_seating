@@ -13,7 +13,7 @@ public class FirstScreen extends CenteredLayout {
 
     public FirstScreen() {
         this.setTitle("Welcome");
-        this.getContentPane().setBackground(new Color(95, 111, 146));
+     //   this.getContentPane().setBackground(new Color(95, 111, 146));
 
         bgImageLabel = new JLabel();
 
@@ -58,7 +58,7 @@ public class FirstScreen extends CenteredLayout {
             int height = getHeight();
 
             // Define gradient colors for the highlighted effect
-                Color gradientStartColor = new Color(255, 255, 255, 200); // Adjust the alpha value
+                Color gradientStartColor = new Color(255, 255, 255, 50); // Adjust the alpha value
             Color gradientEndColor = new Color(255, 255, 255, 0);
 
             // Create a gradient paint

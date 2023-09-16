@@ -22,6 +22,7 @@ public class RoundedButton extends JButton {
 
         // Set preferred size for the button
         setPreferredSize(new Dimension(100, 30));
+        setBorderPainted(false);
 
         setBackground(new Color(206, 214, 216));
 

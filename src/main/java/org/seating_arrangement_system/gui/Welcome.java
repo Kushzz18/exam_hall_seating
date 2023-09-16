@@ -50,3 +50,6 @@ public class Welcome extends CenteredLayout{
         return new ImageIcon(resizedImage);
     }
 }
+
+
+

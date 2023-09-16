@@ -15,14 +15,14 @@ public class StudentView extends CenteredLayout {
     public StudentView() {
         this.setTitle("Student View");
 
-        RoundedButton viewAll = new RoundedButton("View All seatplan", 20); // 10 is the radius
-        viewAll.setPreferredSize(new Dimension(120, 50));
+        JButton viewAll = new JButton("View All seatplan"); // 10 is the radius
+        viewAll.setPreferredSize(new Dimension(150, 50));
 
-        RoundedButton viewSingle = new RoundedButton("View single seatplan", 20);
-        viewSingle.setPreferredSize(new Dimension(120, 50));
+        JButton viewSingle = new JButton("View single seatplan");
+        viewSingle.setPreferredSize(new Dimension(150, 50));
 
-        RoundedButton back = new RoundedButton("Back", 10);
-        back.setPreferredSize(new Dimension(100, 40));
+        JButton back = new JButton("Back");
+        back.setPreferredSize(new Dimension(150, 40));
 
 
         viewAll.addActionListener(action -> {

@@ -29,7 +29,15 @@ public class SingleSeatPlan extends FormLayout {
                     JOptionPane.showMessageDialog(null, "Invalid id or seatplan is not made yet");
                 }
                 else {
-                    JOptionPane.showMessageDialog(null, seat.toString());
+
+                   String message = "Seat Information:\n" +
+                             "Seat ID: " + seat.getStudentId() + "\n" +
+                             "Student Name: " + seat.getStudentName() + "\n" +
+                             "Hall Info: " + seat.getHallInfo() + "\n" +
+                             "Room No: " + seat.getRoomNo() + "\n" +
+                             "Seat ID: " + seat.getSeatId();
+            JOptionPane.showMessageDialog(null, message);
+                  //  JOptionPane.showMessageDialog(null, seat.toString());
                 }
             } catch(Exception e) {
                 JOptionPane.showMessageDialog(null, "Not a valid integer id");

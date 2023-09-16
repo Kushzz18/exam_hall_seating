@@ -17,7 +17,7 @@ public class AdminView extends CenteredLayout {
     private SeatDao.HallComboItem selectedHall;
 
 
-    AdminView () {
+    public AdminView() {
         topLabel.setText("Admin Section");
         topLabel.setFont(new Font("SF Pro", Font.PLAIN, 25));
         topLabel.setForeground(Color.black);
