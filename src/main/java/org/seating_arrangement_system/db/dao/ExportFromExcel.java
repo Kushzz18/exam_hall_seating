@@ -4,12 +4,10 @@ import org.seating_arrangement_system.gui.AdminView;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JFileChooser;
+import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class ExportFromExcel extends Dao {
@@ -53,13 +51,19 @@ public class ExportFromExcel extends Dao {
                         String name = data[1];
                         String sem = data[2];
 
-
+                        // Check if the student ID already exists in the database
+                        if (isStudentIdExists(id)) {
+                            // Throw an error or handle the duplicate ID as needed
+                            JOptionPane.showMessageDialog(null, "Same student ID, please check your data for student ID: " + id, "Error", JOptionPane.ERROR_MESSAGE);
+                            // You can choose to skip this record or take other actions as required.
+                            continue;
+                        }
                         statement.setInt(1, Integer.parseInt(id));
                         statement.setString(2, name);
                         statement.setString(3, sem);
                         statement.addBatch();
-
                         count++;
+
 
                         if (count % batchSize == 0) {
                             statement.executeBatch();
@@ -74,8 +78,7 @@ public class ExportFromExcel extends Dao {
                 statement.executeBatch();
                 connection.commit();
                 connection.close();
-                System.out.println("Data has been inserted successfully.");
-
+                System.out.println("Unique Data has been inserted successfully.");
                 AdminView adminView = new AdminView();
                 adminView.setVisible(true);
 
@@ -93,7 +96,20 @@ public class ExportFromExcel extends Dao {
                 new AdminView();
             }
         }
-
+    }
+    private boolean isStudentIdExists(String studentId) {
+        try {
+            String checkSql = "SELECT COUNT(*) FROM student WHERE id = ?";
+            PreparedStatement checkStatement = connection.prepareStatement(checkSql);
+            checkStatement.setInt(1, Integer.parseInt(studentId));
+            ResultSet resultSet = checkStatement.executeQuery();
+            resultSet.next();
+            int count = resultSet.getInt(1);
+            return count > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
 
