@@ -20,6 +20,8 @@ public class ExportFromExcel extends Dao {
         // Connection connection = null;
 
         try {
+
+            connection.setAutoCommit(false);
 //            Class.forName("com.mysql.cj.jdbc.Driver");
 //            connection = DriverManager.getConnection(jdbcUrl, username, password);
 //            connection.setAutoCommit(false);
@@ -46,25 +48,36 @@ public class ExportFromExcel extends Dao {
                 while ((lineText = lineReader.readLine()) != null) {
                     String[] data = lineText.split(",");
 
-                    String id = data[0];
-                    String name = data[1];
-                    String address = data[2];
-                    String salary = data[3];
+                    if (data.length >= 1) {
+                        String id = data[0];
+                        String name = data[1];
+                        String sem = data[2];
 
-                    statement.setInt(1, Integer.parseInt(id));
-                    statement.setString(2, name);
-                    statement.setString(3, address);
-                    statement.setInt(4, Integer.parseInt(salary));
-                    statement.addBatch();
-                    if (count % batchSize == 0) {
-                        statement.executeBatch();
+
+                        statement.setInt(1, Integer.parseInt(id));
+                        statement.setString(2, name);
+                        statement.setString(3, sem);
+                        statement.addBatch();
+
+                        count++;
+
+                        if (count % batchSize == 0) {
+                            statement.executeBatch();
+                        }
+                        // Continue processing the data
+                    } else {
+                        // Handle the case where data is empty or insufficient
                     }
+
                 }
                 lineReader.close();
                 statement.executeBatch();
                 connection.commit();
                 connection.close();
                 System.out.println("Data has been inserted successfully.");
+
+                AdminView adminView = new AdminView();
+                adminView.setVisible(true);
 
 
             }else{
